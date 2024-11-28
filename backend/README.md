@@ -1,154 +1,86 @@
 # User Authentication Endpoints
 
-## Registration Endpoint
+(Previous Registration and Login sections remain the same)
+
+## Profile Endpoint
 ### Details
-- **URL:** `/users/register`
-- **Method:** POST
-- **Description:** Register a new user in the system
+- **URL:** `/users/profile`
+- **Method:** GET
+- **Description:** Retrieve the authenticated user's profile information
+- **Authentication Required:** Yes (Bearer Token or Cookie Token)
 
-### Request Payload
-#### Required Fields
-| Field | Type | Validation Rules |
-|-------|------|-----------------|
-| `email` | String | - Must be a valid email address<br>- Minimum length: 5 characters |
-| `fullName.firstName` | String | - Required<br>- Minimum length: 3 characters |
-| `fullName.lastName` | String | - Optional<br>- Minimum length: 3 characters (if provided) |
-| `password` | String | - Required<br>- Minimum length: 6 characters |
+### Request Headers
+| Header | Required | Description |
+|--------|----------|-------------|
+| `Authorization` | Optional | Bearer token in format `Bearer your_token_here` |
+| `Cookie` | Optional | `token=your_token_here` |
 
-### Request Example
+### Success Response
+- **Status Code:** 200 OK
+- **Response Body:**
 ```json
 {
-  "email": "user@example.com",
+  "_id": "uniqueMongoDBUserID",
   "fullName": {
     "firstName": "John",
     "lastName": "Doe"
   },
-  "password": "securePassword123"
-}
-```
-
-### Success Response
-- **Status Code:** 200 OK
-- **Response Body:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "_id": "uniqueMongoDBUserID",
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "user@example.com",
-    "createdAt": "2024-01-01T00:00:00.000Z",
-    "updatedAt": "2024-01-01T00:00:00.000Z"
-  }
-}
-```
-
-### Error Response
-- **Status Code:** 400 Bad Request
-- **Possible Error Scenarios:**
-  1. Validation Errors (Invalid email, short name, etc.)
-  ```json
-  {
-    "errors": [
-      {
-        "msg": "Invalid Email",
-        "param": "email",
-        "location": "body"
-      },
-      {
-        "msg": "First name must be at least 3 characters",
-        "param": "fullName.firstName",
-        "location": "body"
-      }
-    ]
-  }
-  ```
-
-## Login Endpoint
-### Details
-- **URL:** `/users/login`
-- **Method:** POST
-- **Description:** Authenticate a user and generate an authentication token
-
-### Request Payload
-#### Required Fields
-| Field | Type | Validation Rules |
-|-------|------|-----------------|
-| `email` | String | - Must be a valid email address |
-| `password` | String | - Required<br>- Minimum length: 6 characters |
-
-### Request Example
-```json
-{
   "email": "user@example.com",
-  "password": "securePassword123"
-}
-```
-
-### Success Response
-- **Status Code:** 200 OK
-- **Response Body:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "_id": "uniqueMongoDBUserID",
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "user@example.com"
-  }
+  "createdAt": "2024-01-01T00:00:00.000Z",
+  "updatedAt": "2024-01-01T00:00:00.000Z"
 }
 ```
 
 ### Error Responses
-1. **Invalid Credentials**
+1. **Unauthorized**
    - **Status Code:** 401 Unauthorized
    ```json
    {
-     "message": "Invalid email or password"
+     "message": "Unauthorized"
    }
    ```
 
-2. **Validation Errors**
-   - **Status Code:** 400 Bad Request
+## Logout Endpoint
+### Details
+- **URL:** `/users/logout`
+- **Method:** GET
+- **Description:** Logout the authenticated user and invalidate the current token
+- **Authentication Required:** Yes (Bearer Token or Cookie Token)
+
+### Request Headers
+| Header | Required | Description |
+|--------|----------|-------------|
+| `Authorization` | Optional | Bearer token in format `Bearer your_token_here` |
+| `Cookie` | Optional | `token=your_token_here` |
+
+### Success Response
+- **Status Code:** 200 OK
+- **Response Body:**
+```json
+{
+  "message": "User Logged out Successfully"
+}
+```
+
+### Error Responses
+1. **Unauthorized**
+   - **Status Code:** 401 Unauthorized
    ```json
    {
-     "errors": [
-       {
-         "msg": "Invalid Email",
-         "param": "email",
-         "location": "body"
-       },
-       {
-         "msg": "Password must be at least 6 characters long",
-         "param": "password",
-         "location": "body"
-       }
-     ]
+     "message": "Unauthorized"
    }
    ```
 
-## Validation Rules
-- Registration Validation:
-  - Email must be a valid email format
-  - First name must be at least 3 characters long
-  - Password must be at least 6 characters long
-
-- Login Validation:
-  - Email must be a valid email format
-  - Password must be at least 6 characters long
-
-## Notes
-- A JWT token is generated upon successful authentication
-- The user's password is hashed before storing in the database
-- Authentication endpoints return the user object along with the authentication token
+## Authentication Mechanism
+- Tokens are generated using JWT (JSON Web Tokens)
+- Tokens can be sent via:
+  1. Authorization header with 'Bearer ' prefix
+  2. HTTP-only cookie named 'token'
+- Tokens are automatically blacklisted on logout
+- Blacklisted tokens are valid for 24 hours before automatic deletion
 
 ## Security Considerations
-- Passwords are hashed using bcrypt with 10 salt rounds
-- JWT token is signed with a secret key for authentication
-- Sensitive user information is not included in the response
+- Tokens are signed with a secret key
+- Sensitive user information (password) is never returned
+- Tokens can be invalidated on logout
+- Uses HTTP-only cookies for additional security
