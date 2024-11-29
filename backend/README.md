@@ -84,3 +84,106 @@
 - Sensitive user information (password) is never returned
 - Tokens can be invalidated on logout
 - Uses HTTP-only cookies for additional security
+
+# Captains Registration Endpoint
+
+## Endpoint Details
+- **URL**: `/captains/register`
+- **Method**: `POST`
+- **Description**: Register a new captain (driver) in the system
+
+## Request Body
+
+### Required Fields
+| Field | Type | Validation Rules |
+|-------|------|-----------------|
+| `fullName.firstName` | String | - Minimum 3 characters long |
+| `fullName.lastName` | String | - Optional |
+| `email` | String | - Must be a valid email format |
+| `password` | String | - Minimum 6 characters long |
+| `vehicle.color` | String | - Minimum 3 characters long |
+| `vehicle.plate` | String | - Minimum 3 characters long |
+| `vehicle.capacity` | Number | - Minimum value of 1 |
+| `vehicle.vehicleType` | String | - Must be one of: "car", "motorcycle", "auto" |
+
+### Example Request Body
+```json
+{
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "securePassword123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+## Validation Checks
+The endpoint performs the following validations:
+- Checks that all required fields are present
+- Validates email format
+- Ensures first name is at least 3 characters
+- Ensures password is at least 6 characters
+- Validates vehicle color and plate are at least 3 characters
+- Checks vehicle capacity is at least 1
+- Verifies vehicle type is one of the allowed types
+
+## Response
+
+### Successful Registration
+- **Status Code**: `201 Created`
+- **Response Body**:
+  ```json
+  {
+    "token": "<authentication_token>",
+    "captain": "<captain_object>"
+  }
+  ```
+
+### Error Responses
+1. **Validation Error**
+   - **Status Code**: `400 Bad Request`
+   - **Response Body**: 
+     ```json
+     {
+       "errors": [
+         {
+           "msg": "<specific_error_message>",
+           "param": "<field_with_error>"
+         }
+       ]
+     }
+     ```
+
+2. **Existing Captain**
+   - **Status Code**: `400 Bad Request`
+   - **Response Body**:
+     ```json
+     {
+       "message": "Captain already exists"
+     }
+     ```
+
+## Additional Notes
+- Passwords are hashed before storing in the database
+- An authentication token is generated upon successful registration
+- Captain's initial status is set to "inactive"
+
+## Authentication
+- The registration generates a JWT token valid for 24 hours
+- Token can be used for subsequent authenticated requests
+
+## Possible Vehicle Types
+- "car"
+- "motorcycle"
+- "auto"
+
+## Error Handling
+- Comprehensive validation checks prevent invalid data submission
+- Duplicate email registrations are prevented
