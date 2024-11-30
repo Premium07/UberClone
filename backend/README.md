@@ -3,21 +3,26 @@
 (Previous Registration and Login sections remain the same)
 
 ## Profile Endpoint
+
 ### Details
+
 - **URL:** `/users/profile`
 - **Method:** GET
 - **Description:** Retrieve the authenticated user's profile information
 - **Authentication Required:** Yes (Bearer Token or Cookie Token)
 
 ### Request Headers
-| Header | Required | Description |
-|--------|----------|-------------|
+
+| Header          | Required | Description                                     |
+| --------------- | -------- | ----------------------------------------------- |
 | `Authorization` | Optional | Bearer token in format `Bearer your_token_here` |
-| `Cookie` | Optional | `token=your_token_here` |
+| `Cookie`        | Optional | `token=your_token_here`                         |
 
 ### Success Response
+
 - **Status Code:** 200 OK
 - **Response Body:**
+
 ```json
 {
   "_id": "uniqueMongoDBUserID",
@@ -32,6 +37,7 @@
 ```
 
 ### Error Responses
+
 1. **Unauthorized**
    - **Status Code:** 401 Unauthorized
    ```json
@@ -41,21 +47,26 @@
    ```
 
 ## Logout Endpoint
+
 ### Details
+
 - **URL:** `/users/logout`
 - **Method:** GET
 - **Description:** Logout the authenticated user and invalidate the current token
 - **Authentication Required:** Yes (Bearer Token or Cookie Token)
 
 ### Request Headers
-| Header | Required | Description |
-|--------|----------|-------------|
+
+| Header          | Required | Description                                     |
+| --------------- | -------- | ----------------------------------------------- |
 | `Authorization` | Optional | Bearer token in format `Bearer your_token_here` |
-| `Cookie` | Optional | `token=your_token_here` |
+| `Cookie`        | Optional | `token=your_token_here`                         |
 
 ### Success Response
+
 - **Status Code:** 200 OK
 - **Response Body:**
+
 ```json
 {
   "message": "User Logged out Successfully"
@@ -63,6 +74,7 @@
 ```
 
 ### Error Responses
+
 1. **Unauthorized**
    - **Status Code:** 401 Unauthorized
    ```json
@@ -72,6 +84,7 @@
    ```
 
 ## Authentication Mechanism
+
 - Tokens are generated using JWT (JSON Web Tokens)
 - Tokens can be sent via:
   1. Authorization header with 'Bearer ' prefix
@@ -80,6 +93,7 @@
 - Blacklisted tokens are valid for 24 hours before automatic deletion
 
 ## Security Considerations
+
 - Tokens are signed with a secret key
 - Sensitive user information (password) is never returned
 - Tokens can be invalidated on logout
@@ -88,6 +102,7 @@
 # Captains Registration Endpoint
 
 ## Endpoint Details
+
 - **URL**: `/captains/register`
 - **Method**: `POST`
 - **Description**: Register a new captain (driver) in the system
@@ -95,18 +110,20 @@
 ## Request Body
 
 ### Required Fields
-| Field | Type | Validation Rules |
-|-------|------|-----------------|
-| `fullName.firstName` | String | - Minimum 3 characters long |
-| `fullName.lastName` | String | - Optional |
-| `email` | String | - Must be a valid email format |
-| `password` | String | - Minimum 6 characters long |
-| `vehicle.color` | String | - Minimum 3 characters long |
-| `vehicle.plate` | String | - Minimum 3 characters long |
-| `vehicle.capacity` | Number | - Minimum value of 1 |
+
+| Field                 | Type   | Validation Rules                              |
+| --------------------- | ------ | --------------------------------------------- |
+| `fullName.firstName`  | String | - Minimum 3 characters long                   |
+| `fullName.lastName`   | String | - Optional                                    |
+| `email`               | String | - Must be a valid email format                |
+| `password`            | String | - Minimum 6 characters long                   |
+| `vehicle.color`       | String | - Minimum 3 characters long                   |
+| `vehicle.plate`       | String | - Minimum 3 characters long                   |
+| `vehicle.capacity`    | Number | - Minimum value of 1                          |
 | `vehicle.vehicleType` | String | - Must be one of: "car", "motorcycle", "auto" |
 
 ### Example Request Body
+
 ```json
 {
   "fullName": {
@@ -125,7 +142,9 @@
 ```
 
 ## Validation Checks
+
 The endpoint performs the following validations:
+
 - Checks that all required fields are present
 - Validates email format
 - Ensures first name is at least 3 characters
@@ -137,6 +156,7 @@ The endpoint performs the following validations:
 ## Response
 
 ### Successful Registration
+
 - **Status Code**: `201 Created`
 - **Response Body**:
   ```json
@@ -147,9 +167,11 @@ The endpoint performs the following validations:
   ```
 
 ### Error Responses
+
 1. **Validation Error**
+
    - **Status Code**: `400 Bad Request`
-   - **Response Body**: 
+   - **Response Body**:
      ```json
      {
        "errors": [
@@ -171,19 +193,223 @@ The endpoint performs the following validations:
      ```
 
 ## Additional Notes
+
 - Passwords are hashed before storing in the database
 - An authentication token is generated upon successful registration
 - Captain's initial status is set to "inactive"
 
 ## Authentication
+
 - The registration generates a JWT token valid for 24 hours
 - Token can be used for subsequent authenticated requests
 
 ## Possible Vehicle Types
+
 - "car"
 - "motorcycle"
 - "auto"
 
 ## Error Handling
+
 - Comprehensive validation checks prevent invalid data submission
 - Duplicate email registrations are prevented
+
+# Captains Endpoints Documentation
+
+## 1. Register Endpoint
+
+### Endpoint Details
+
+- **URL**: `/captains/register`
+- **Method**: `POST`
+- **Description**: Register a new captain (driver) in the system
+
+#### Request Body
+
+**Required Fields**:
+| Field | Type | Validation Rules |
+|-------|------|-----------------|
+| `fullName.firstName` | String | - Minimum 3 characters long |
+| `fullName.lastName` | String | - Optional |
+| `email` | String | - Must be a valid email format |
+| `password` | String | - Minimum 6 characters long |
+| `vehicle.color` | String | - Minimum 3 characters long |
+| `vehicle.plate` | String | - Minimum 3 characters long |
+| `vehicle.capacity` | Number | - Minimum value of 1 |
+| `vehicle.vehicleType` | String | - Must be one of: "car", "motorcycle", "auto" |
+
+#### Example Request Body
+
+```json
+{
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "securePassword123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Responses
+
+- **Success** (Status 201):
+  ```json
+  {
+    "token": "<authentication_token>",
+    "captain": "<captain_object>"
+  }
+  ```
+- **Validation Error** (Status 400):
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "<specific_error_message>",
+        "param": "<field_with_error>"
+      }
+    ]
+  }
+  ```
+- **Existing Captain** (Status 400):
+  ```json
+  {
+    "message": "Captain already exists"
+  }
+  ```
+
+## 2. Login Endpoint
+
+### Endpoint Details
+
+- **URL**: `/captains/login`
+- **Method**: `POST`
+- **Description**: Authenticate a captain and generate an access token
+
+#### Request Body
+
+**Required Fields**:
+| Field | Type | Validation Rules |
+|-------|------|-----------------|
+| `email` | String | - Must be a valid email format |
+| `password` | String | - Minimum 6 characters long |
+
+#### Example Request Body
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "securePassword123"
+}
+```
+
+#### Responses
+
+- **Success** (Status 200):
+  ```json
+  {
+    "token": "<authentication_token>",
+    "captain": "<captain_object>"
+  }
+  ```
+- **Validation Error** (Status 400):
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "<specific_error_message>",
+        "param": "<field_with_error>"
+      }
+    ]
+  }
+  ```
+- **Invalid Credentials** (Status 401):
+  ```json
+  {
+    "message": "Invalid credentials"
+  }
+  ```
+
+## 3. Profile Endpoint
+
+### Endpoint Details
+
+- **URL**: `/captains/profile`
+- **Method**: `GET`
+- **Description**: Retrieve the current captain's profile
+- **Authentication**: Required (Bearer Token)
+
+#### Request Headers
+
+| Header          | Value            | Description          |
+| --------------- | ---------------- | -------------------- |
+| `Authorization` | `Bearer <token>` | Authentication token |
+
+#### Responses
+
+- **Success** (Status 200):
+  ```json
+  {
+    "captain": {
+      "_id": "<captain_id>",
+      "fullName": {
+        "firstName": "John",
+        "lastName": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    }
+  }
+  ```
+- **Unauthorized** (Status 401):
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+## 4. Logout Endpoint
+
+### Endpoint Details
+
+- **URL**: `/captains/logout`
+- **Method**: `GET`
+- **Description**: Log out the current captain and invalidate the access token
+- **Authentication**: Required (Bearer Token)
+
+#### Request Headers
+
+| Header          | Value            | Description          |
+| --------------- | ---------------- | -------------------- |
+| `Authorization` | `Bearer <token>` | Authentication token |
+
+#### Responses
+
+- **Success** (Status 200):
+  ```json
+  {
+    "message": "captain logged out successfully"
+  }
+  ```
+- **Unauthorized** (Status 401):
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+## Authentication Notes
+
+- JWT tokens are generated with a 24-hour expiration
+- Tokens can
