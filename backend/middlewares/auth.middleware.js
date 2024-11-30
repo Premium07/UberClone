@@ -71,7 +71,7 @@ module.exports.authCaptain = async (req, res, next) => {
         .json({ message: "Unauthorized: captain not found" });
     }
 
-    req.captain = captain; // Attach captain4 to the request object
+    req.captain = captain; // Attach captain to the request object
 
     // Proceed to the next middleware
     return next();
