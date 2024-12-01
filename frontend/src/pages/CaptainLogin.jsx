@@ -20,11 +20,11 @@ const CaptainLogin = () => {
         <img src="./driver.webp" alt="logo" className="w-16 mb-5" />
         <form className="flex flex-col gap-5" onSubmit={submitHandler}>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-lg font-medium mb-2">
+            <label htmlFor="email" className="text-base font-medium mb-2">
               What&apos;s your email
             </label>
             <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-base"
+              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-sm"
               type="email"
               value={email}
               name="email"
@@ -34,11 +34,11 @@ const CaptainLogin = () => {
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-lg font-medium mb-2">
+            <label htmlFor="password" className="text-base font-medium mb-2">
               Enter password
             </label>
             <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-base"
+              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-sm"
               type="password"
               name="password"
               onChange={(e) => setPassword(e.target.value)}
@@ -47,7 +47,7 @@ const CaptainLogin = () => {
               required
             />
           </div>
-          <button className="bg-[#111111] text-white rounded py-2 px-4 w-full text-lg placeholder:text-base">
+          <button className="bg-[#111111] text-white rounded py-2 px-4 w-full text-base">
             Login
           </button>
           <p className="text-center">
@@ -61,7 +61,7 @@ const CaptainLogin = () => {
       <div className="mt-4">
         <Link
           to={"/login"}
-          className="flex items-center justify-center bg-orange-700 text-white rounded py-2 px-4 w-full text-lg placeholder:text-base"
+          className="flex items-center justify-center bg-orange-700 text-white rounded py-2 px-4 w-full text-base"
         >
           Sign in as User.
         </Link>
