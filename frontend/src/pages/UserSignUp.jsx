@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 
 const UserSignUp = () => {
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState({});
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setUserData({ email, password });
+    setUserData({ username: { firstName, lastName }, email, password });
     // console.log(userData);
+    setFirstName("");
+    setLastName("");
     setEmail("");
     setPassword("");
   };
@@ -21,30 +25,36 @@ const UserSignUp = () => {
         <img src="./logo.png" alt="logo" className="w-16 mb-5" />
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           <div className="flex flex-col">
-            <label htmlFor="firstname" className="text-base font-medium mb-2">
+            <label htmlFor="firstname" className="text-lg font-medium mb-2">
               What&apos;s your name
             </label>
             <div className=" flex items-center gap-2">
-            <input
-              className="bg-[#eeeeee] rounded py-2 px-4 w-1/2 border text-base placeholder:text-sm"
-              type="text"
-              placeholder="firstname"
-              required
-            />
-            <input
-              className="bg-[#eeeeee] rounded py-2 px-4 w-1/2 border text-base placeholder:text-sm"
-              type="text"
-              placeholder="lastname"
-              required
-            />
+              <input
+                className="bg-[#eeeeee] rounded py-2 px-4 w-1/2 border text-lg placeholder:text-base"
+                type="text"
+                value={firstName}
+                name="firstname"
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="firstname"
+                required
+              />
+              <input
+                className="bg-[#eeeeee] rounded py-2 px-4 w-1/2 border text-lg placeholder:text-base"
+                type="text"
+                placeholder="lastname"
+                value={lastName}
+                name="lastname"
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
             </div>
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-base font-medium mb-2">
+            <label htmlFor="email" className="text-lg font-medium mb-2">
               What&apos;s your email
             </label>
             <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-base placeholder:text-sm"
+              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-base"
               type="email"
               value={email}
               name="email"
@@ -54,11 +64,11 @@ const UserSignUp = () => {
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-base font-medium mb-2">
+            <label htmlFor="password" className="text-lg font-medium mb-2">
               Enter password
             </label>
             <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-base placeholder:text-sm"
+              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-base"
               type="password"
               name="password"
               onChange={(e) => setPassword(e.target.value)}
@@ -67,24 +77,29 @@ const UserSignUp = () => {
               required
             />
           </div>
-          <button className="bg-[#111111] text-white rounded py-2 px-4 w-full text-base">
-            Sign Up
+          <button className="bg-[#111111] text-white rounded py-2 px-4 w-full text-lg">
+            Sign up
           </button>
           <p className="text-center">
-            Already account?{" "}
+            Already have a account?{" "}
             <Link to={"/login"} className="text-blue-600">
-              Login your account
+              Login here
             </Link>
           </p>
         </form>
       </div>
       <div className="mt-4">
-        <Link
+        {/* <Link
           to={"/captain-signup"}
           className="flex items-center justify-center bg-emerald-700 text-white rounded py-2 px-4 w-full text-base"
         >
           Sign up as Captain.
-        </Link>
+        </Link> */}
+        <p className="text-[10px] leading-tight">
+          By proceeding, you consent to get calls, WhatsApp or SMS messages,
+          including by automated means, from Uber and its affiliates to the
+          number provided.
+        </p>
       </div>
     </section>
   );
