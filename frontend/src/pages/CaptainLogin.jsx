@@ -21,7 +21,7 @@ const CaptainLogin = () => {
         <form className="flex flex-col gap-5" onSubmit={submitHandler}>
           <div className="flex flex-col">
             <label htmlFor="email" className="text-base font-medium mb-2">
-              What&apos;s your email
+              What&apos;s your email ?
             </label>
             <input
               className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-sm"
