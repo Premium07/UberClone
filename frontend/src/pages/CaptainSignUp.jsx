@@ -10,7 +10,7 @@ const CaptainSignUp = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setUserData({ username: { firstName, lastName }, email, password });
+    setUserData({ fullName: { firstName, lastName }, email, password });
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -23,7 +23,7 @@ const CaptainSignUp = () => {
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           <div className="flex flex-col">
             <label htmlFor="firstname" className=" font-medium mb-2">
-              What&apos;s your name ?
+              What&apos;s our Captain&apos;s name ?
             </label>
             <div className=" flex items-center gap-2">
               <input
@@ -48,7 +48,7 @@ const CaptainSignUp = () => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="email" className="text-base font-medium mb-2">
-              What&apos;s your email ?
+              What&apos;s our Captain&apos;s email ?
             </label>
             <input
               className="bg-[#eeeeee] rounded py-2 px-4 border w-full  placeholder:text-sm"
