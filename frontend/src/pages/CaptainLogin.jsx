@@ -17,7 +17,10 @@ const CaptainLogin = () => {
   return (
     <section className="p-7 h-screen flex flex-col justify-between">
       <div>
-        <img src="./driver.webp" alt="logo" className="w-16 mb-5" />
+        <Link to={"/"}>
+          {" "}
+          <img src="./driver.webp" alt="logo" className="w-16 mb-5" />
+        </Link>
         <form className="flex flex-col gap-5" onSubmit={submitHandler}>
           <div className="flex flex-col">
             <label htmlFor="email" className="text-base font-medium mb-2">

@@ -1,18 +1,33 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserDataContext } from "../context/UserContext";
+import axios from "axios";
 
 const UserSignUp = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState({});
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserDataContext);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setUserData({ fullName: { firstName, lastName }, email, password });
-    // console.log(userData);
+    const newUser = { fullName: { firstName, lastName }, email, password };
+
+    const res = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      newUser
+    );
+
+    if (res.status === 201) {
+      const data = res.data;
+      setUser(data.user);
+      navigate("/home");
+    }
+
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -22,7 +37,9 @@ const UserSignUp = () => {
   return (
     <section className="p-5 h-screen flex flex-col justify-between">
       <div>
-        <img src="./logo.png" alt="logo" className="w-16 mb-5" />
+        <Link to={"/"}>
+          <img src="./logo.png" alt="logo" className="w-16 mb-5" />
+        </Link>
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           <div className="flex flex-col">
             <label htmlFor="firstname" className="text-lg font-medium mb-2">
@@ -77,8 +94,8 @@ const UserSignUp = () => {
               required
             />
           </div>
-          <button className="bg-[#111111] text-white rounded py-2 px-4 w-full text-lg">
-            Sign up
+          <button type="submit" className="bg-[#111111] text-white rounded py-2 px-4 w-full text-lg">
+            Create account
           </button>
           <p className="text-center">
             Already have a account?{" "}

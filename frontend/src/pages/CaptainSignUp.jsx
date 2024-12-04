@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -19,7 +20,9 @@ const CaptainSignUp = () => {
   return (
     <section className="p-5 h-screen flex flex-col justify-between">
       <div>
-        <img src="./driver.webp" alt="logo" className="w-16 mb-5" />
+        <Link to={'/'}>
+          <img src="./driver.webp" alt="logo" className="w-16 mb-5" />
+        </Link>
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           <div className="flex flex-col">
             <label htmlFor="firstname" className=" font-medium mb-2">

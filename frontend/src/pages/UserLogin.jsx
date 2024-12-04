@@ -18,7 +18,10 @@ const UserLogin = () => {
   return (
     <section className="p-6 h-screen flex flex-col justify-between">
       <div>
-        <img src="./logo.png" alt="logo" className="w-16 mb-5" />
+        <Link to={"/"}>
+          {" "}
+          <img src="./logo.png" alt="logo" className="w-16 mb-5" />
+        </Link>
         <form className="flex flex-col gap-5" onSubmit={submitHandler}>
           <div className="flex flex-col">
             <label htmlFor="email" className="text-base font-medium mb-2">
