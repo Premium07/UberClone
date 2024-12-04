@@ -1,4 +1,5 @@
-const blackListToken = require("../models/blackListToken");
+const BlackListToken = require("../models/blackListToken");
+// const blackListToken = require("../models/blackListToken");
 const userModel = require("../models/user.model");
 const userService = require("../services/user.services");
 const { validationResult } = require("express-validator");
@@ -64,11 +65,33 @@ module.exports.getUserProfile = async (req, res, next) => {
 };
 
 module.exports.logoutUser = async (req, res, next) => {
-  res.clearCookie("token");
+  try {
+    // Clear the token from cookies
+    res.clearCookie("token");
 
-  const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+    // Safely retrieve the token from cookies or Authorization header
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-  await blackListToken.create({ token });
+    // If no token is found, respond with success since the user is effectively logged out
+    if (!token) {
+      return res.status(200).json({ message: "User Logged out Successfully" });
+    }
 
-  res.status(200).json({ message: "User Logged out Successfully" });
+    // Verify and blacklist the token (optional, based on your application's needs)
+    try {
+      jwt.verify(token, process.env.JWT_SECRET); // Verify token before blacklisting
+      await BlackListToken.create({ token }); // Add to blacklist if valid
+    } catch (error) {
+      console.warn(
+        "Logout attempted with invalid/expired token:",
+        error.message
+      );
+      // No need to fail logout for invalid/expired tokens
+    }
+
+    return res.status(200).json({ message: "User Logged out Successfully" });
+  } catch (error) {
+    console.error("Logout error:", error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 };

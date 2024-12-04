@@ -13,6 +13,7 @@ const UserLogin = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     const userData = {
       email,
       password,
@@ -23,18 +24,22 @@ const UserLogin = () => {
       userData
     );
 
+    // console.log(res)
+
     if (res.status === 200) {
       const data = res.data;
       setUser(data.user);
+      localStorage.setItem("token", data.token);
+
       navigate("/home");
     }
-
     setEmail("");
     setPassword("");
   };
 
   return (
     <section className="p-6 h-screen flex flex-col justify-between">
+      {/* <Toaster /> */}
       <div>
         <Link to={"/"}>
           {" "}

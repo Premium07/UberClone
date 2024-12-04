@@ -25,6 +25,7 @@ const UserSignUp = () => {
     if (res.status === 201) {
       const data = res.data;
       setUser(data.user);
+      localStorage.setItem("token", data.token);
       navigate("/home");
     }
 
@@ -94,7 +95,10 @@ const UserSignUp = () => {
               required
             />
           </div>
-          <button type="submit" className="bg-[#111111] text-white rounded py-2 px-4 w-full text-lg">
+          <button
+            type="submit"
+            className="bg-[#111111] text-white rounded py-2 px-4 w-full text-lg"
+          >
             Create account
           </button>
           <p className="text-center">
