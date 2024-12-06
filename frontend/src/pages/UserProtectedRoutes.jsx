@@ -24,7 +24,7 @@ const UserProtectedRoutes = ({ children }) => {
         if (res.status === 200) {
           setUser(res.data.captain);
           setLoading(false);
-        }
+        } 
       })
       .catch((err) => {
         console.log(err);
