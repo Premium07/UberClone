@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { IoIosArrowDown } from "react-icons/io";
+import LocationSearchPanel from "../components/LocationSearchPanel";
 
 const Home = () => {
   const [pickUp, setPickUp] = useState("");
@@ -18,7 +19,7 @@ const Home = () => {
     if (panelOpen) {
       gsap.to(panelRef.current, {
         height: "70%",
-       
+        padding: 20,
       });
     } else {
       gsap.to(panelRef.current, {
@@ -41,7 +42,7 @@ const Home = () => {
         <img src="./hero.gif" alt="heroimage" className="bg-cover size-full" />
       </div>
       <div className="h-screen absolute top-0 w-full flex flex-col justify-end">
-        <div className="h-[30%] flex flex-col gap-4 p-5 bg-white relative rounded-l-xl shadow-xl rounded-r-xl">
+        <div className="h-[30%] flex flex-col gap-4 p-5 bg-white relative">
           {panelOpen && (
             <span
               className="absolute top-6 right-4 text-xl"
@@ -73,7 +74,9 @@ const Home = () => {
             />
           </form>
         </div>
-        <div ref={panelRef} className=" bg-red-400"></div>
+        <div ref={panelRef} className="bg-white">
+          <LocationSearchPanel />
+        </div>
       </div>
     </section>
   );
