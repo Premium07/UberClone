@@ -1,4 +1,3 @@
-
 import { createContext, useState } from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -12,10 +11,11 @@ const UserContext = ({ children }) => {
       lastName: "",
     },
   });
+  const [loading, setLoading] = useState(true);
 
   return (
     <div>
-      <UserDataContext.Provider value={{ user, setUser }}>
+      <UserDataContext.Provider value={{ user, setUser, loading, setLoading }}>
         {children}
       </UserDataContext.Provider>
     </div>

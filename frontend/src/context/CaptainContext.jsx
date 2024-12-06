@@ -1,21 +1,23 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState } from "react";
 
 export const CaptainDataContext = createContext();
 
 const CaptainContext = ({ children }) => {
   const [captain, setCaptain] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const value = {
     captain,
     setCaptain,
+    loading,
+    setLoading,
   };
 
   return (
-    <div>
-      <CaptainDataContext.Provider value={value}>
-        {children}
-      </CaptainDataContext.Provider>
-    </div>
+    <CaptainDataContext.Provider value={value}>
+      {children}
+    </CaptainDataContext.Provider>
   );
 };
 

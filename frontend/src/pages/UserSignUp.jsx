@@ -3,12 +3,18 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserDataContext } from "../context/UserContext";
 import axios from "axios";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const UserSignUp = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserDataContext);
@@ -82,18 +88,28 @@ const UserSignUp = () => {
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-lg font-medium mb-2">
+            <label htmlFor="password" className="text-base font-medium mb-2">
               Enter password
             </label>
-            <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-base"
-              type="password"
-              name="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              placeholder="password"
-              required
-            />
+            <div className="relative">
+              <input
+                className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-sm pr-10"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                placeholder="password"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-black"
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+              </button>
+            </div>
           </div>
           <button
             type="submit"

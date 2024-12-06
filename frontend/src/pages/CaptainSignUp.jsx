@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CaptainDataContext } from "../context/CaptainContext";
 import axios from "axios";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const CaptainSignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -13,6 +14,11 @@ const CaptainSignUp = () => {
   const [plate, setVehiclePlate] = useState("");
   const [capacity, setVehicleCapacity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const { captain, setCaptain } = useContext(CaptainDataContext);
 
@@ -42,7 +48,7 @@ const CaptainSignUp = () => {
       const data = res.data;
       setCaptain(data.captain);
       localStorage.setItem("token", data.token);
-      navigate('/captain-home')
+      navigate("/captain-home");
     }
 
     setFirstName("");
@@ -104,18 +110,28 @@ const CaptainSignUp = () => {
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-base font-medium mb-1">
+            <label htmlFor="password" className="text-base font-medium mb-2">
               Enter password
             </label>
-            <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full placeholder:text-sm"
-              type="password"
-              name="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              placeholder="Password"
-              required
-            />
+            <div className="relative">
+              <input
+                className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-sm pr-10"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                placeholder="password"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-black"
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+              </button>
+            </div>
           </div>
           <div className="flex flex-col">
             <label className="text-base font-medium mb-1">

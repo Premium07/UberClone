@@ -5,9 +5,10 @@ import CaptainSignUp from "./pages/CaptainSignUp";
 import CaptainLogin from "./pages/CaptainLogin";
 import LandingPage from "./pages/LandingPage";
 import Home from "./pages/Home";
-import ProtectedRoutes from "./pages/ProtectedRoutes";
+import UserProtectedRoutes from "./pages/UserProtectedRoutes";
 import UserLogout from "./pages/UserLogout";
 import CaptainHome from "./pages/CaptainHome";
+import CaptainProtectedRoutes from "./pages/CaptainProtectedRoutes";
 
 const App = () => {
   return (
@@ -17,12 +18,19 @@ const App = () => {
         <Route
           path="/home"
           element={
-            <ProtectedRoutes>
+            <UserProtectedRoutes>
               <Home />
-            </ProtectedRoutes>
+            </UserProtectedRoutes>
           }
         />
-        <Route path="/captain-home" element={<CaptainHome />} />
+        <Route
+          path="/captain-home"
+          element={
+            <CaptainProtectedRoutes>
+              <CaptainHome />
+            </CaptainProtectedRoutes>
+          }
+        />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<UserSignUp />} />
         <Route path="/captain-signup" element={<CaptainSignUp />} />
@@ -30,9 +38,9 @@ const App = () => {
         <Route
           path="/user/logout"
           element={
-            <ProtectedRoutes>
+            <UserProtectedRoutes>
               <UserLogout />
-            </ProtectedRoutes>
+            </UserProtectedRoutes>
           }
         />
       </Routes>
