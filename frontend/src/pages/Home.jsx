@@ -3,13 +3,16 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { IoIosArrowDown } from "react-icons/io";
 import LocationSearchPanel from "../components/LocationSearchPanel";
+import VehiclePanel from "../components/VehiclePanel";
 
 const Home = () => {
   const [pickUp, setPickUp] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
+  const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
 
   const panelRef = useRef(null);
+  const vehiclePanelRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,8 +31,20 @@ const Home = () => {
     }
   }, [panelOpen]);
 
+  useGSAP(() => {
+    if (vehiclePanelOpen) {
+      gsap.to(vehiclePanelRef.current, {
+        transform: "translateY(0)",
+      });
+    } else {
+      gsap.to(vehiclePanelRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [vehiclePanelOpen]);
+
   return (
-    <section className="h-screen relative">
+    <section className="h-screen relative overflow-hidden">
       <div>
         <img
           src="./logo.png"
@@ -75,8 +90,22 @@ const Home = () => {
           </form>
         </div>
         <div ref={panelRef} className="bg-white">
-          <LocationSearchPanel />
+          <LocationSearchPanel
+            vehiclePanel={vehiclePanelOpen}
+            setVehiclePanelOpen={setVehiclePanelOpen}
+            panelOpen={panelOpen}
+            setPanelOpen={setPanelOpen}
+          />
         </div>
+      </div>
+      <div
+        ref={vehiclePanelRef}
+        className="fixed z-10 bottom-0 bg-white px-3 py-10 translate-y-full w-full flex flex-col gap-2"
+      >
+        <VehiclePanel
+          vehiclePanelOpen={vehiclePanelOpen}
+          setVehiclePanelOpen={setVehiclePanelOpen}
+        />
       </div>
     </section>
   );

@@ -37,7 +37,7 @@ const UserProtectedRoutes = ({ children }) => {
   if (loading)
     return (
       <div className="w-full h-screen flex items-center justify-center">
-        <span className="size-10 animate-spin border-4 border-t-4 border-t-black rounded-full"></span>
+        <span className="size-10 animate-spin border-4 border-t-4 border-t-gray-500 rounded-full"></span>
       </div>
     );
 
