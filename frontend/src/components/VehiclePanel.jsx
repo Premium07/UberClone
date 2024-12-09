@@ -1,16 +1,23 @@
 import { FaUser } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
-const VehiclePanel = ({ vehiclePanelOpen, setVehiclePanelOpen }) => {
+const VehiclePanel = ({
+  vehiclePanelOpen,
+  setVehiclePanelOpen,
+  setConfirmRidePanel,
+}) => {
   return (
-    <div>
+    <section>
       <div
         onClick={() => setVehiclePanelOpen(!vehiclePanelOpen)}
-        className=" w-full absolute top-0 left-1/2 text-gray-500 text-xl p-3"
+        className="w-full absolute top-0 left-1/2 text-gray-500 text-xl p-3"
       >
         <IoIosArrowDown />
       </div>
-      <div className="flex items-start justify-between p-3 w-full border-2 rounded-xl active:border-black">
+      <div
+        onClick={() => setConfirmRidePanel(true)}
+        className="flex items-start justify-between p-3 w-full border-2 rounded-xl active:border-black"
+      >
         <img src="./car.webp" alt="car" className="h-12" />
         <div className="w-1/2 flex flex-col">
           <h4 className="flex gap-4 items-center font-semibold">
@@ -24,7 +31,10 @@ const VehiclePanel = ({ vehiclePanelOpen, setVehiclePanelOpen }) => {
         </div>
         <h2 className="text-lg font-semibold">₹ 193.20</h2>
       </div>
-      <div className="flex items-start justify-between p-3 w-full border-2 rounded-xl active:border-black">
+      <div
+        onClick={() => setConfirmRidePanel(true)}
+        className="flex items-start justify-between p-3 w-full border-2 rounded-xl active:border-black"
+      >
         <img src="./bike.webp" alt="car" className="h-12" />
         <div className="w-1/2 flex flex-col">
           <h4 className="flex gap-4 items-center font-semibold">
@@ -38,7 +48,10 @@ const VehiclePanel = ({ vehiclePanelOpen, setVehiclePanelOpen }) => {
         </div>
         <h2 className="text-lg font-semibold">₹ 65</h2>
       </div>
-      <div className="flex items-start justify-between p-3 w-full border-2 rounded-xl active:border-black">
+      <div
+        onClick={() => setConfirmRidePanel(true)}
+        className="flex items-start justify-between p-3 w-full border-2 rounded-xl active:border-black"
+      >
         <img src="./auto.webp" alt="car" className="h-12" />
         <div className="w-1/2 flex flex-col">
           <h4 className="flex gap-4 items-center font-semibold">
@@ -52,7 +65,7 @@ const VehiclePanel = ({ vehiclePanelOpen, setVehiclePanelOpen }) => {
         </div>
         <h2 className="text-lg font-semibold">₹ 115</h2>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -4,15 +4,18 @@ import gsap from "gsap";
 import { IoIosArrowDown } from "react-icons/io";
 import LocationSearchPanel from "../components/LocationSearchPanel";
 import VehiclePanel from "../components/VehiclePanel";
+import ConfirmedRide from "../components/ConfirmedRide";
 
 const Home = () => {
   const [pickUp, setPickUp] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
+  const [confirmRidePanel, setConfirmRidePanel] = useState(false);
 
   const panelRef = useRef(null);
   const vehiclePanelRef = useRef(null);
+  const confirmRidePanelRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +45,18 @@ const Home = () => {
       });
     }
   }, [vehiclePanelOpen]);
+
+  useGSAP(() => {
+    if (confirmRidePanel) {
+      gsap.to(confirmRidePanelRef.current, {
+        transform: "translateY(0)",
+      });
+    } else {
+      gsap.to(confirmRidePanelRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [confirmRidePanel]);
 
   return (
     <section className="h-screen relative overflow-hidden">
@@ -100,11 +115,22 @@ const Home = () => {
       </div>
       <div
         ref={vehiclePanelRef}
-        className="fixed z-10 bottom-0 bg-white px-3 py-10 translate-y-full w-full flex flex-col gap-2"
+        className="fixed z-10 bottom-0 bg-white px-3 py-10 pt-12 translate-y-full w-full flex flex-col gap-2"
       >
         <VehiclePanel
           vehiclePanelOpen={vehiclePanelOpen}
           setVehiclePanelOpen={setVehiclePanelOpen}
+          setConfirmRidePanel={setConfirmRidePanel}
+        />
+      </div>
+      <div
+        ref={confirmRidePanelRef}
+        className="fixed z-10 bottom-0 bg-white px-3 py-6 pt-12 translate-y-full w-full flex flex-col gap-2"
+      >
+        <ConfirmedRide
+          setVehiclePanelOpen={setVehiclePanelOpen}
+          vehiclePanelOpen={vehiclePanelOpen}
+          setConfirmRidePanel={setConfirmRidePanel}
         />
       </div>
     </section>
