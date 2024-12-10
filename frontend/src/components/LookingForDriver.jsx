@@ -1,24 +1,16 @@
 import { IoIosArrowDown } from "react-icons/io";
-import { LuMapPin, LuMapPinCheck, LuCircleDollarSign } from "react-icons/lu";
+import { LuCircleDollarSign, LuMapPin, LuMapPinCheck } from "react-icons/lu";
 
-const ConfirmedRide = ({
-  // setVehiclePanelOpen,
-  // vehiclePanelOpen,
-  setConfirmRidePanel,
-  setVehicleFound,
-}) => {
+const LookingForDriver = ({ setVehicleFound }) => {
   return (
     <section>
       <div
-        onClick={() => {
-          // setVehiclePanelOpen(!vehiclePanelOpen);
-          setConfirmRidePanel(false);
-        }}
+        onClick={() => setVehicleFound(false)}
         className="w-full absolute top-0 left-1/2 text-gray-500 text-xl p-3"
       >
         <IoIosArrowDown />
       </div>
-      <h3 className="font-semibold text-xl mb-4">Confirm your Ride</h3>
+      <h3 className="font-semibold text-xl mb-4">Looking for a Driver</h3>
       <section className="flex flex-col justify-between items-center gap-2">
         <img src="./car.webp" alt="confirm Ride Image" className="h-20" />
         <div className="w-full flex flex-col gap-4 justify-center">
@@ -50,19 +42,9 @@ const ConfirmedRide = ({
             </div>
           </div>
         </div>
-
-        <button
-          onClick={() => {
-            setVehicleFound(true);
-            setConfirmRidePanel(false);
-          }}
-          className="w-full bg-black font-semibold p-2 rounded-lg text-white mt-4"
-        >
-          Confirm
-        </button>
       </section>
     </section>
   );
 };
 
-export default ConfirmedRide;
+export default LookingForDriver;

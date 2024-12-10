@@ -1,26 +1,24 @@
 import { IoIosArrowDown } from "react-icons/io";
-import { LuMapPin, LuMapPinCheck, LuCircleDollarSign } from "react-icons/lu";
+import { LuCircleDollarSign, LuMapPin, LuMapPinCheck } from "react-icons/lu";
 
-const ConfirmedRide = ({
-  // setVehiclePanelOpen,
-  // vehiclePanelOpen,
-  setConfirmRidePanel,
-  setVehicleFound,
-}) => {
+const WaitForDriver = ({ waitForDriverPanel, setWaitForDriverPanel }) => {
   return (
     <section>
       <div
-        onClick={() => {
-          // setVehiclePanelOpen(!vehiclePanelOpen);
-          setConfirmRidePanel(false);
-        }}
+        onClick={() => setWaitForDriverPanel(!waitForDriverPanel)}
         className="w-full absolute top-0 left-1/2 text-gray-500 text-xl p-3"
       >
         <IoIosArrowDown />
       </div>
-      <h3 className="font-semibold text-xl mb-4">Confirm your Ride</h3>
+      <div className="flex items-center justify-between">
+        <img src="./car.webp" alt="confirm Ride Image" className="h-12" />
+        <div className="text-right">
+          <h2 className="text-lg ">Prem</h2>
+          <h4 className="text-xl -mt-1 -mb-1 font-semibold">PR 5 2678</h4>
+          <p className="text-sm text-gray-500">Neta EV</p>
+        </div>
+      </div>
       <section className="flex flex-col justify-between items-center gap-2">
-        <img src="./car.webp" alt="confirm Ride Image" className="h-20" />
         <div className="w-full flex flex-col gap-4 justify-center">
           <div className="flex items-center gap-5 p-3 border-b-2">
             <LuMapPin className="text-xl" />
@@ -50,19 +48,9 @@ const ConfirmedRide = ({
             </div>
           </div>
         </div>
-
-        <button
-          onClick={() => {
-            setVehicleFound(true);
-            setConfirmRidePanel(false);
-          }}
-          className="w-full bg-black font-semibold p-2 rounded-lg text-white mt-4"
-        >
-          Confirm
-        </button>
       </section>
     </section>
   );
 };
 
-export default ConfirmedRide;
+export default WaitForDriver;

@@ -57,7 +57,7 @@ const UserLogin = () => {
               What&apos;s your email
             </label>
             <input
-              className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-base placeholder:text-sm"
+              className="bg-[#eeeeee] rounded py-2 px-4 border w-full placeholder:text-sm"
               type="email"
               value={email}
               name="email"
@@ -72,7 +72,7 @@ const UserLogin = () => {
             </label>
             <div className="relative">
               <input
-                className="bg-[#eeeeee] rounded py-2 px-4 border w-full text-lg placeholder:text-sm pr-10"
+                className="bg-[#eeeeee] rounded py-2 px-4 border w-full placeholder:text-sm pr-10"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 onChange={(e) => setPassword(e.target.value)}
